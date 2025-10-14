@@ -31,10 +31,15 @@ footer { text-align:center; padding:40px; background-color:#e8d9d0; color:#666;}
 #backToTop { position:fixed; bottom:30px; right:30px; width:50px; height:50px; border:none; border-radius:50%; background-color:#d9a8a8; color:#fff; font-size:24px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); display:none; transition:opacity 0.3s ease; z-index:1001;}
 #backToTop:hover { background-color:#c17c7c;}
 
-/* 日系浮動音樂按鈕 */
-#musicBtn { position:fixed; bottom:100px; right:30px; width:50px; height:50px; border-radius:50%; background-color:#ffc0cb; border:2px solid #e6cfcf; cursor:pointer; font-size:24px; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1001;}
-#musicPanel { position:fixed; bottom:160px; right:30px; background-color:#fff0f5; border:1px solid #e6cfcf; border-radius:12px; padding:10px 15px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1001; display:none; flex-direction:column; align-items:center; gap:10px;}
-#musicPanel audio { outline:none; width:180px; }
+/* 浮動音樂按鈕 */
+#musicBtnWrapper { position:fixed; bottom:100px; right:30px; display:flex; align-items:center; gap:5px; z-index:1001; }
+#musicBtn { width:50px; height:50px; border-radius:50%; background-color:#ffc0cb; border:2px solid #e6cfcf; cursor:pointer; font-size:24px; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.2); }
+#musicStatus { font-size:20px; }
+
+/* 音樂控制面板 */
+#musicPanel { position:fixed; bottom:160px; right:30px; background-color:#fff0f5; border:1px solid #e6cfcf; border-radius:12px; padding:10px 15px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1001; display:none; flex-direction:column; align-items:center; gap:10px; }
+#musicPanel button, #musicPanel input { cursor:pointer; }
+#musicPanel audio { display:none; }
 </style>
 </head>
 <body>
@@ -88,15 +93,29 @@ footer { text-align:center; padding:40px; background-color:#e8d9d0; color:#666;}
 <!-- 回頂按鈕 -->
 <button id="backToTop">↑</button>
 
-<!-- 浮動音樂按鈕 -->
-<div id="musicBtn">🎵</div>
+<!-- 浮動音樂按鈕 + 狀態 -->  
+<div id="musicBtnWrapper">
+  <div id="musicBtn">⏸</div>
+</div>
+
+<!-- 音樂控制面板 -->
 <div id="musicPanel">
-  <span>播放音樂</span>
+  <button id="playPause">播放/暫停</button>
+  <label for="volume">音量</label>
+  <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+  
+  <!-- 新增時間條 -->
+  <div style="display:flex; align-items:center; gap:5px; width:180px;">
+    <span id="currentTime" style="width:35px; text-align:right;">0:00</span>
+    <input type="range" id="progressBar" value="0" min="0" max="100" step="0.1" style="flex:1;">
+  </div>
+
   <audio id="myAudio" autoplay loop>
     <source src="https://raw.githubusercontent.com/lailaiian/web.github.io/main/music/001.mp3" type="audio/mp3">
     您的瀏覽器不支援音樂播放。
   </audio>
 </div>
+
 
 <script>
   // 導覽列
@@ -108,19 +127,74 @@ footer { text-align:center; padding:40px; background-color:#e8d9d0; color:#666;}
   // 回頂按鈕
   const backToTop = document.getElementById("backToTop");
   window.onscroll = function(){
-    if(document.documentElement.scrollTop>200) backToTop.style.display="block";
+    if(document.documentElement.scrollTop>200 || document.body.scrollTop>200) backToTop.style.display="block";
     else backToTop.style.display="none";
   }
   backToTop.addEventListener("click", ()=>{window.scrollTo({top:0,behavior:'smooth'});});
 
-  // 音樂按鈕
+  // 音樂控制
   const musicBtn = document.getElementById("musicBtn");
   const musicPanel = document.getElementById("musicPanel");
   const audio = document.getElementById("myAudio");
-  audio.volume = 0.5; // 預設50%
+  const playPause = document.getElementById("playPause");
+  const volumeSlider = document.getElementById("volume");
+  //const musicStatus = document.getElementById("musicStatus");
+  // 進度條與時間顯示
+  const progressBar = document.getElementById("progressBar");
+  const currentTimeText = document.getElementById("currentTime");
+  const durationText = document.getElementById("duration");
 
+  // 等音樂加載完畢才知道總長
+  audio.addEventListener("loadedmetadata", ()=>{
+    progressBar.max = audio.duration;
+    durationText.textContent = formatTime(audio.duration);
+  });
+
+  // 更新進度條與當前時間
+  audio.addEventListener("timeupdate", ()=>{
+    progressBar.value = audio.currentTime;
+    currentTimeText.textContent = formatTime(audio.currentTime);
+  });
+
+  // 拖曳進度條改變播放位置
+  progressBar.addEventListener("input", ()=>{
+    audio.currentTime = progressBar.value;
+  });
+
+  // 格式化時間 (秒 -> 分:秒)
+  function formatTime(time){
+    const minutes = Math.floor(time/60);
+    const seconds = Math.floor(time%60).toString().padStart(2,'0');
+    return `${minutes}:${seconds}`;
+  }
+
+  // 預設音量 50%
+  audio.volume = 0.5;
+
+  // 初始狀態顯示
+  //musicStatus.textContent = "⏸";
+
+  // 面板顯示/隱藏
   musicBtn.addEventListener("click", ()=>{
     musicPanel.style.display = (musicPanel.style.display==='flex')?'none':'flex';
+  });
+
+  // 播放/暫停
+  playPause.addEventListener("click", ()=>{
+    if(audio.paused){
+      audio.play();
+      //musicStatus.textContent = "▶";
+      musicBtn.textContent = "⏸"; // 播放
+    } else {
+      audio.pause();
+      //musicStatus.textContent = "⏸";
+      musicBtn.textContent = "▶"; // 暫停
+    }
+  });
+
+  // 音量控制
+  volumeSlider.addEventListener("input", ()=>{
+    audio.volume = volumeSlider.value;
   });
 </script>
 
