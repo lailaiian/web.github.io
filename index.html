@@ -1,44 +1,128 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>關於我 | Lailaiian</title>
-  <style>
-    body {
-      font-family: "Noto Sans TC", sans-serif;
-      background-color: #f7f4f2;
-      color: #333;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    header {
-      background-color: #f2e9e4;
-      padding: 40px 0;
-      font-size: 2em;
-      font-weight: bold;
-    }
-    section {
-      margin: 40px auto;
-      max-width: 600px;
-      line-height: 1.8;
-    }
-    footer {
-      margin-top: 60px;
-      padding: 20px;
-      background-color: #f2e9e4;
-      color: #666;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關於我 | Lailaiian</title>
+<style>
+html { scroll-behavior: smooth; }
+body { font-family:"Noto Sans TC",sans-serif; background-color:#f7f4f2; color:#333; margin:0; padding:0; }
+
+/* 導覽列 */
+.navbar { position:fixed; top:0; left:0; width:100%; height:60px; background-color:#e8d9d0; display:flex; align-items:center; justify-content:space-between; padding-inline:max(2vw,20px); z-index:1000; box-sizing:border-box; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.menu-icon { font-size:28px; cursor:pointer; color:#555; user-select:none;}
+.nav-title { font-weight:bold; font-size:18px; color:#333; white-space:nowrap;}
+.menu { position:fixed; top:0; left:-250px; width:220px; height:100%; background-color:#fff; box-shadow:2px 0 5px rgba(0,0,0,0.1); padding-top:60px; transition:left 0.3s ease; z-index:999;}
+.menu.active { left:0;}
+.menu a { display:block; padding:15px 20px; color:#333; text-decoration:none; font-size:18px;}
+.menu a:hover { background-color:#e8d9d0;}
+
+/* 頁面區塊 */
+header { height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:#e8d9d0; padding-top:60px;}
+header h1 { font-size:3em; margin-bottom:0.5em;}
+header p { font-size:1.2em; color:#666;}
+section { padding:80px 20px; max-width:800px; margin:auto; line-height:1.8;}
+section:nth-child(even) { background-color:#f0ece9; }
+section:nth-child(odd) { background-color:#f4f0ed; }
+h2 { text-align:center; margin-bottom:40px; color:#444;}
+footer { text-align:center; padding:40px; background-color:#e8d9d0; color:#666;}
+
+/* 回頂按鈕 */
+#backToTop { position:fixed; bottom:30px; right:30px; width:50px; height:50px; border:none; border-radius:50%; background-color:#d9a8a8; color:#fff; font-size:24px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); display:none; transition:opacity 0.3s ease; z-index:1001;}
+#backToTop:hover { background-color:#c17c7c;}
+
+/* 日系浮動音樂按鈕 */
+#musicBtn { position:fixed; bottom:100px; right:30px; width:50px; height:50px; border-radius:50%; background-color:#ffc0cb; border:2px solid #e6cfcf; cursor:pointer; font-size:24px; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1001;}
+#musicPanel { position:fixed; bottom:160px; right:30px; background-color:#fff0f5; border:1px solid #e6cfcf; border-radius:12px; padding:10px 15px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1001; display:none; flex-direction:column; align-items:center; gap:10px;}
+#musicPanel audio { outline:none; width:180px; }
+</style>
 </head>
 <body>
-  <header>你好，我是 Lailaiian 🌸</header>
-  <section>
-    <p>歡迎來到我的個人介紹網頁！</p>
-    <p>我喜歡設計、影像處理與網頁開發。</p>
-    <p>這個頁面是使用 <strong>GitHub Pages</strong> 免費架設的！</p>
-  </section>
-  <footer>© 2025 Lailaiian</footer>
+
+<!-- 導覽列 -->
+<div class="navbar">
+  <div class="menu-icon" id="menuIcon">☰</div>
+  <div class="nav-title">Lailaiian</div>
+</div>
+
+<!-- 側邊選單 -->
+<div class="menu" id="menu">
+  <a href="#about" onclick="closeMenu()">關於我</a>
+  <a href="#skills" onclick="closeMenu()">技能</a>
+  <a href="#projects" onclick="closeMenu()">作品集</a>
+  <a href="#contact" onclick="closeMenu()">聯絡我</a>
+</div>
+
+<header id="top">
+  <h1>你好，我是 Lailaiian 🌸</h1>
+  <p>一位熱愛設計與網頁開發的創作者</p>
+</header>
+
+<section id="about">
+  <h2>關於我</h2>
+  <p>我喜歡簡潔、自然、帶有柔和色調的設計風格。平時我會練習前端開發、嘗試不同風格的個人網頁設計。</p>
+</section>
+
+<section id="skills">
+  <h2>技能</h2>
+  <ul>
+    <li>💻 HTML / CSS / JavaScript</li>
+    <li>🎨 UI/UX 設計與色彩搭配</li>
+    <li>🧠 Python 基礎與自動化應用</li>
+  </ul>
+</section>
+
+<section id="projects">
+  <h2>作品集</h2>
+  <p>我會陸續在這裡展示我完成的網頁與設計作品，包含互動式網站、主題式介紹頁面與發票辨識專題。</p>
+</section>
+
+<section id="contact">
+  <h2>聯絡我</h2>
+  <p>📧 E-mail: a21099844@gmail.com</p>
+  <p>🌐 GitHub: <a href="https://github.com/lailaiian" target="_blank">github.com/lailaiian</a></p>
+</section>
+
+<footer>© 2025 Lailaiian | 製作於 GitHub Pages</footer>
+
+<!-- 回頂按鈕 -->
+<button id="backToTop">↑</button>
+
+<!-- 浮動音樂按鈕 -->
+<div id="musicBtn">🎵</div>
+<div id="musicPanel">
+  <span>播放音樂</span>
+  <audio id="myAudio" autoplay loop>
+    <source src="music/my-song.mp3" type="audio/mpeg">
+    您的瀏覽器不支援音樂播放。
+  </audio>
+</div>
+
+<script>
+  // 導覽列
+  const menuIcon = document.getElementById("menuIcon");
+  const menu = document.getElementById("menu");
+  menuIcon.addEventListener("click", ()=>{menu.classList.toggle("active");});
+  function closeMenu(){menu.classList.remove("active");}
+
+  // 回頂按鈕
+  const backToTop = document.getElementById("backToTop");
+  window.onscroll = function(){
+    if(document.documentElement.scrollTop>200) backToTop.style.display="block";
+    else backToTop.style.display="none";
+  }
+  backToTop.addEventListener("click", ()=>{window.scrollTo({top:0,behavior:'smooth'});});
+
+  // 音樂按鈕
+  const musicBtn = document.getElementById("musicBtn");
+  const musicPanel = document.getElementById("musicPanel");
+  const audio = document.getElementById("myAudio");
+  audio.volume = 0.5; // 預設50%
+
+  musicBtn.addEventListener("click", ()=>{
+    musicPanel.style.display = (musicPanel.style.display==='flex')?'none':'flex';
+  });
+</script>
+
 </body>
 </html>
