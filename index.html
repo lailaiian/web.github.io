@@ -24,8 +24,20 @@ header p { font-size:1.2em; color:#666;}
 section { padding:80px 20px; max-width:800px; margin:auto; line-height:1.8;}
 section:nth-child(even) { background-color:#f0ece9; }
 section:nth-child(odd) { background-color:#f4f0ed; }
-h2 { text-align:center; margin-bottom:40px; color:#444;}
+h2, h3 { text-align:center; margin-bottom:40px; color:#444;}
 footer { text-align:center; padding:40px; background-color:#e8d9d0; color:#666;}
+
+/* 影片置中 */
+iframe {
+  display:block;
+  margin:20px auto;
+  width:90%;
+  max-width:560px;
+  aspect-ratio:16/9;
+  border:none;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.15);
+}
 
 /* 回頂按鈕 */
 #backToTop { position:fixed; bottom:30px; right:30px; width:50px; height:50px; border:none; border-radius:50%; background-color:#d9a8a8; color:#fff; font-size:24px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); display:none; transition:opacity 0.3s ease; z-index:1001;}
@@ -34,12 +46,14 @@ footer { text-align:center; padding:40px; background-color:#e8d9d0; color:#666;}
 /* 浮動音樂按鈕 */
 #musicBtnWrapper { position:fixed; bottom:100px; right:30px; display:flex; align-items:center; gap:5px; z-index:1001; }
 #musicBtn { width:50px; height:50px; border-radius:50%; background-color:#ffc0cb; border:2px solid #e6cfcf; cursor:pointer; font-size:24px; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.2); }
-#musicStatus { font-size:20px; }
 
 /* 音樂控制面板 */
-#musicPanel { position:fixed; bottom:160px; right:30px; background-color:#fff0f5; border:1px solid #e6cfcf; border-radius:12px; padding:10px 15px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1001; display:none; flex-direction:column; align-items:center; gap:10px; }
+#musicPanel { position:fixed; bottom:160px; right:30px; background-color:#fff0f5; border:1px solid #e6cfcf; border-radius:12px; padding:10px 15px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1001; display:none; flex-direction:column; align-items:center; gap:10px; width:200px;}
 #musicPanel button, #musicPanel input { cursor:pointer; }
 #musicPanel audio { display:none; }
+#progressContainer { display:flex; align-items:center; gap:5px; width:100%; box-sizing:border-box; }
+#currentTime { width:35px; text-align:right; white-space:nowrap; }
+#progressBar { flex:1; min-width:0; }
 </style>
 </head>
 <body>
@@ -53,33 +67,43 @@ footer { text-align:center; padding:40px; background-color:#e8d9d0; color:#666;}
 <!-- 側邊選單 -->
 <div class="menu" id="menu">
   <a href="#about" onclick="closeMenu()">關於我</a>
-  <a href="#skills" onclick="closeMenu()">技能</a>
-  <a href="#projects" onclick="closeMenu()">作品集</a>
+  <a href="#skills" onclick="closeMenu()">證照</a>
+  <a href="#projects" onclick="closeMenu()">作品</a>
   <a href="#contact" onclick="closeMenu()">聯絡我</a>
 </div>
 
 <header id="top">
   <h1>你好，我是 Lailaiian 🌸</h1>
-  <p>一位熱愛設計與網頁開發的創作者</p>
+  <p>一位熱愛程式設計的人</p>
 </header>
 
 <section id="about">
   <h2>關於我</h2>
-  <p>我喜歡簡潔、自然、帶有柔和色調的設計風格。平時我會練習前端開發、嘗試不同風格的個人網頁設計。</p>
+  <p>您好，我是勤益科技大學資訊工程系的畢業生，個性正向積極，喜歡接受挑戰並持續學習新知。在大學期間，我不僅培養了紮實的程式設計能力，也透過專題實作鍛鍊了團隊合作與解決問題的能力。
+    在專題製作中，我與團隊製作的主題是「會計員福音」，是一套便利於會計員報稅的系統，目的是提升會計員在處理發票時的效率與準確性。透過影像辨識與自動化流程，成功將傳統人工輸入的大量作業數據，轉化為更快速、精準的數位處理方式。這個專題不僅強化了我的技術能力，也讓我學習到資訊技術如何優化產業中的問題。
+    在學習與生活上，我始終保持積極的態度，樂於嘗試新挑戰。除了專業能力外，我也注重溝通與協作，能夠在團隊中有效表達想法並整合不同的意見。我相信這樣的特質，能幫助我快速適應新的工作環境，並持續為團隊創造價值。
+  </p>
 </section>
 
 <section id="skills">
-  <h2>技能</h2>
+  <h2>證照</h2>
   <ul>
-    <li>💻 HTML / CSS / JavaScript</li>
-    <li>🎨 UI/UX 設計與色彩搭配</li>
-    <li>🧠 Python 基礎與自動化應用</li>
+    <li>丙級電腦硬體裝修技術士</li>
+    <li>丙級工業電子技術士</li>
+    <li>丙級工業配線技術士</li>
   </ul>
 </section>
 
 <section id="projects">
-  <h2>作品集</h2>
-  <p>我會陸續在這裡展示我完成的網頁與設計作品，包含互動式網站、主題式介紹頁面與發票辨識專題。</p>
+  <h2>作品</h2>
+  <h3>會計員福音</h3>
+  <iframe src="https://www.youtube.com/embed/57uf47hddXo" title="會計員福音" allowfullscreen></iframe>
+  <p>在日常財務處理、報帳過程中，手動輸入發票內容不僅耗時，還容易因為人為因素導致錯誤。因此，希望透過自動化技術來提升數據擷取的準確性與效率，以及減少人工負擔。 
+    本系統結合了OCR（光學字元辨識）技術與影像處理方法，能夠從發票圖像中精確提取關鍵資訊，如發票號碼、日期、賣方統一編號、電話以及 QR Code 等。特別的是，我們使用了 YOLO 來辨識數字，相較於傳統 OCR 方法，能夠提高數字辨識的穩定性與準確度。此外，系統還搭配了優化的影像預處理技術，包括二值化、大津法閾值、侵蝕與膨脹等，進一步提升辨識效果。 
+    先以掃描機將發票掃描進主機裡，再分辨是甚麼種類的發票，去做出對應的處理，辨識出日期、字軌、統編、金額等等。 
+    辨識完成後，會將資料以及該張發票圖片存進資料庫，並且可從UI上直接查看或更改資料。能夠抓取到會計員需要的資料，並在發票上做標識，方便人員查看並修正錯誤，假如有潛在錯誤也能夠將該地方標示起來，並可以從UI上直接修改資料，能夠大幅降低會計員需要的時間。  
+    這套系統的設計以實用性與效率為核心，透過智能化的辨識與數據處理，實現發票的關鍵資訊提取。只需透過簡單的 UI 操作，即可查看、修改辨識結果，並將數據與發票圖片存入資料庫。系統還能自動標示重要資訊與潛在錯誤，協助會計人員快速核對與修正，大幅提升作業便利性與準確性，減少手動輸入的時間與錯誤率。
+  </p>
 </section>
 
 <section id="contact">
@@ -93,110 +117,87 @@ footer { text-align:center; padding:40px; background-color:#e8d9d0; color:#666;}
 <!-- 回頂按鈕 -->
 <button id="backToTop">↑</button>
 
-<!-- 浮動音樂按鈕 + 狀態 -->  
+<!-- 浮動音樂按鈕 -->
 <div id="musicBtnWrapper">
   <div id="musicBtn">▶</div>
 </div>
 
 <!-- 音樂控制面板 -->
 <div id="musicPanel">
-  <button id="playPause">播放/暫停</button>
+  <button id="playPause">播放 / 暫停</button>
   <label for="volume">音量</label>
   <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
-  
-  <!-- 新增時間條 -->
-  <div style="display:flex; align-items:center; gap:5px; width:180px;">
-    <span id="currentTime" style="width:35px; text-align:right;">0:00</span>
-    <input type="range" id="progressBar" value="0" min="0" max="100" step="0.1" style="flex:1;">
+  <div id="progressContainer">
+    <span id="currentTime">0:00</span>
+    <input type="range" id="progressBar" value="0" min="0" max="100" step="0.1">
   </div>
-
-  <audio id="myAudio" autoplay loop>
+  <audio id="myAudio" loop>
     <source src="https://raw.githubusercontent.com/lailaiian/web.github.io/main/music/001.mp3" type="audio/mp3">
-    您的瀏覽器不支援音樂播放。
   </audio>
 </div>
 
-
 <script>
   // 導覽列
-  const menuIcon = document.getElementById("menuIcon");
-  const menu = document.getElementById("menu");
-  menuIcon.addEventListener("click", ()=>{menu.classList.toggle("active");});
+  const menuIcon=document.getElementById("menuIcon");
+  const menu=document.getElementById("menu");
+  menuIcon.addEventListener("click",()=>{menu.classList.toggle("active");});
   function closeMenu(){menu.classList.remove("active");}
 
   // 回頂按鈕
-  const backToTop = document.getElementById("backToTop");
-  window.onscroll = function(){
-    if(document.documentElement.scrollTop>200 || document.body.scrollTop>200) backToTop.style.display="block";
+  const backToTop=document.getElementById("backToTop");
+  window.onscroll=function(){
+    if(document.documentElement.scrollTop>200) backToTop.style.display="block";
     else backToTop.style.display="none";
-  }
-  backToTop.addEventListener("click", ()=>{window.scrollTo({top:0,behavior:'smooth'});});
+  };
+  backToTop.addEventListener("click",()=>{window.scrollTo({top:0,behavior:'smooth'});});
 
   // 音樂控制
-  const musicBtn = document.getElementById("musicBtn");
-  const musicPanel = document.getElementById("musicPanel");
-  const audio = document.getElementById("myAudio");
-  const playPause = document.getElementById("playPause");
-  const volumeSlider = document.getElementById("volume");
-  //const musicStatus = document.getElementById("musicStatus");
-  // 進度條與時間顯示
-  const progressBar = document.getElementById("progressBar");
-  const currentTimeText = document.getElementById("currentTime");
-  const durationText = document.getElementById("duration");
+  const audio=document.getElementById("myAudio");
+  const playPause=document.getElementById("playPause");
+  const volumeSlider=document.getElementById("volume");
+  const progressBar=document.getElementById("progressBar");
+  const currentTimeText=document.getElementById("currentTime");
+  const musicBtn=document.getElementById("musicBtn");
+  const musicPanel=document.getElementById("musicPanel");
 
-  // 等音樂加載完畢才知道總長
-  audio.addEventListener("loadedmetadata", ()=>{
-    progressBar.max = audio.duration;
-    durationText.textContent = formatTime(audio.duration);
-  });
+  let firstScrollPlayed=false;
 
-  // 更新進度條與當前時間
-  audio.addEventListener("timeupdate", ()=>{
-    progressBar.value = audio.currentTime;
-    currentTimeText.textContent = formatTime(audio.currentTime);
-  });
-
-  // 拖曳進度條改變播放位置
-  progressBar.addEventListener("input", ()=>{
-    audio.currentTime = progressBar.value;
-  });
-
-  // 格式化時間 (秒 -> 分:秒)
-  function formatTime(time){
-    const minutes = Math.floor(time/60);
-    const seconds = Math.floor(time%60).toString().padStart(2,'0');
-    return `${minutes}:${seconds}`;
-  }
-
-  // 預設音量 50%
-  audio.volume = 0.5;
-
-  // 初始狀態顯示
-  //musicStatus.textContent = "⏸";
-
-  // 面板顯示/隱藏
-  musicBtn.addEventListener("click", ()=>{
-    musicPanel.style.display = (musicPanel.style.display==='flex')?'none':'flex';
-  });
-
-  // 播放/暫停
-  playPause.addEventListener("click", ()=>{
-    if(audio.paused){
-      audio.play();
-      //musicStatus.textContent = "▶";
-      musicBtn.textContent = "⏸"; // 播放
-    } else {
-      audio.pause();
-      //musicStatus.textContent = "⏸";
-      musicBtn.textContent = "▶"; // 暫停
+  // 自動播放（滑動一次）
+  window.addEventListener("scroll",()=>{
+    if(!firstScrollPlayed){
+      audio.play().then(()=>{musicBtn.textContent="⏸";}).catch(()=>{});
+      firstScrollPlayed=true;
     }
   });
 
-  // 音量控制
-  volumeSlider.addEventListener("input", ()=>{
-    audio.volume = volumeSlider.value;
+  // 顯示 / 隱藏面板
+  musicBtn.addEventListener("click",()=>{
+    musicPanel.style.display=(musicPanel.style.display==='flex')?'none':'flex';
   });
-</script>
 
+  // 播放暫停
+  playPause.addEventListener("click",()=>{
+    if(audio.paused){audio.play();musicBtn.textContent="⏸";}
+    else {audio.pause();musicBtn.textContent="▶";}
+  });
+
+  // 音量
+  audio.volume=0.5;
+  volumeSlider.addEventListener("input",()=>{audio.volume=volumeSlider.value;});
+
+  // 進度條與時間
+  audio.addEventListener("timeupdate",()=>{
+    progressBar.max=audio.duration;
+    progressBar.value=audio.currentTime;
+    currentTimeText.textContent=formatTime(audio.currentTime);
+  });
+  progressBar.addEventListener("input",()=>{audio.currentTime=progressBar.value;});
+
+  function formatTime(sec){
+    const m=Math.floor(sec/60);
+    const s=Math.floor(sec%60).toString().padStart(2,'0');
+    return `${m}:${s}`;
+  }
+</script>
 </body>
 </html>
