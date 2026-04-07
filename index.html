@@ -163,12 +163,12 @@ iframe {
   let firstScrollPlayed=false;
 
   // 自動播放（滑動一次）
-  window.addEventListener("scroll",()=>{
-    if(!firstScrollPlayed){
-      audio.play().then(()=>{musicBtn.textContent="⏸";}).catch(()=>{});
-      firstScrollPlayed=true;
-    }
-  });
+  // window.addEventListener("scroll",()=>{
+  //   if(!firstScrollPlayed){
+  //     audio.play().then(()=>{musicBtn.textContent="⏸";}).catch(()=>{});
+  //     firstScrollPlayed=true;
+  //   }
+  // });
 
   // 顯示 / 隱藏面板
   musicBtn.addEventListener("click",()=>{
